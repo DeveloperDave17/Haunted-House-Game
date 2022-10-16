@@ -1,6 +1,6 @@
 package com.edu.hauntedhouse;
 
-abstract class Character {
+public class Character {
     private final String name;
     private final String desc;
     private Room roomReference;
@@ -29,6 +29,4 @@ abstract class Character {
 
     public String getDesc(){return desc;}
 
-
-    //Moves the character from one room to the next room, specific implementation exists in NPC and Player
 }

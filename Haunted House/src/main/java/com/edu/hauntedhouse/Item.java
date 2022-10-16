@@ -76,9 +76,15 @@ public class Item {
     public String toString(){
         return name + " : " + desc + (itemBroken ? " (broken)" : " (not broken)");}
 
-    //public void breakItem() will update itemBroken to true
+    /**
+     * breakItem updates the itemBroken value to true.
+     */
     public void breakItem(){itemBroken = true;}
 
+    /**
+     * Checks if this item is broken.
+     * @return A boolean value based upon whether the item is broken.
+     */
     public boolean isItemBroken(){
         return itemBroken;
     }

@@ -3,7 +3,7 @@ package com.edu.hauntedhouse;
 import java.util.ArrayList;
 import java.util.Random;
 
-abstract class NPC extends Character{
+public class NPC extends Character{
 
     private double scarednessLevel = 0;
 
@@ -16,8 +16,12 @@ abstract class NPC extends Character{
         super(name,desc);
     }
 
-    /*
-    abstract void scareNPC(int scareScore){} will increase scaredness level by the amount the NPC was scared
+    /**
+     * Scares an NPC by increasing their scarednessLevel by the scareScore specified, checks to see if a scare level
+     * is greater than or equal 100 then leaves the house if so. If not it checks whether a npc has a scarednessLevel
+     * of greater than or equal to 50 then if true calls the move method and the associated rooms removeBrokenItems
+     * method.
+     * @param scareScore The amount the scarednessLevel is to increase by.
      */
     public void scareNPC(double scareScore){
         scarednessLevel += scareScore;
@@ -30,6 +34,9 @@ abstract class NPC extends Character{
         }
     }
 
+    /**
+     * Moves the npc from their current room to a randomly connected room.
+     */
     public void move(){
         Room temp = this.getRoomReference();
         ArrayList<Room> rooms = new ArrayList<>();
@@ -66,12 +73,4 @@ abstract class NPC extends Character{
     public double getScarednessLevel(){
         return scarednessLevel;
     }
-
-    //public void move(Room room1, Room room2)     will allow the NPC to move from one room to a connected room
-    //                                             by checking if the NPC can move to the specified room
-    //                                             using Room methods connectedRoom() then if true, npcLeaveRoom() then
-    //                                             addNPC() then brokenItems() will be called then if true
-    //                                             removeBrokenItems() will be called. Something to note is a random
-    //                                             number generator will be used to determine which room the npc
-    //                                             will move to unless the project specifies otherwise.
 }

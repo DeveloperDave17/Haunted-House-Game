@@ -61,7 +61,7 @@ public class Room {
         if(player != null){descs.add("\n" + player.toString());}
         items.forEach(item -> descs.add("\n" + item.toString()));
         String desc = descs.toString().replace("[", "").replace("]", "");
-        return roomName + " : " + roomDesc + desc;
+        return roomName + " : " + roomDesc + desc + "\n";
     }
 
 
@@ -73,8 +73,12 @@ public class Room {
     public Room getSouthRoom(){return ROOMS[SOUTH];}
     public Room getEastRoom(){return ROOMS[EAST];}
     public Room getWestRoom(){return ROOMS[WEST];}
-        //public boolean roomConnected(Room room){} //Will return a boolean value based upon if the room is connected
-        //                                          (exists to the NORTH,SOUTH,EAST, or WEST)
+
+    /**
+     * Checks if a room for a specified direction exists.
+     * @param direction Cardinal direction (North, South, West, East).
+     * @return A boolean value based upon whether a room is connected in the desired direction.
+     */
     public boolean roomConnected(String direction){
         if(direction.equalsIgnoreCase("north")){
             return ROOMS[NORTH] != null;
@@ -88,8 +92,13 @@ public class Room {
     }
 
 
-    //public void hauntNotification() will send out a scaredness level increase for each npc in the room by calling
-    //                                the scareNPC() method of each npc.
+    /**
+     * Using a specified item and associated action all npcs within the room are sent "haunt notifications" by calling
+     * each npcs scareNPC method and creating a random scare score for each. Calls the breakItem method for an item
+     * if it is thrown.
+     * @param itemName Name of item used for haunting.
+     * @param action Action to be done to the item.
+     */
     public void hauntNotification(String itemName, String action){
         Random random = new Random();
         //Ensuring all NPCs are scared (Prevents NPCs leaving rooms from changing the size of the iterated array)
@@ -117,11 +126,17 @@ public class Room {
         }
     }
 
-    //public void playerLeaveRoom() will remove the player from the room
+    /**
+     * Gets rid of the associated player reference attached to the room when the player leaves.
+     */
     public void playerLeaveRoom(){
         player = null;
     }
-    //public void npcLeaveRoom() will remove the npc from the room
+
+    /**
+     * Removes a specified npc from the room.
+     * @param npc The npc who is to be removed.
+     */
     public void npcLeaveRoom(NPC npc){
         int i;
         //finding the index of the npc within the npcs array
@@ -131,7 +146,7 @@ public class Room {
             }
         }
         if(i < numNPCs - 1){
-            //moving all the npcs up 1 in the array and ensuring a duplicate wont exist
+            //moving all the npcs up 1 in the array and ensuring a duplicate won't exist
             for(int idx = i; idx < numNPCs; idx++){
                 npcs[idx] = npcs[idx+1];
                 npcs[idx+1] = null;
@@ -150,11 +165,20 @@ public class Room {
         items.add(item);
     }
 
-
+    /**
+     * Gets an item reference from the room based upon a specified index.
+     * @param index The specified index of an array list containing items.
+     * @return The desired item reference.
+     */
     public Item getItem(int index){
         return items.get(index);
     }
 
+    /**
+     * Gets an item reference from the room based upon a specified item name.
+     * @param itemName The name of the item which a reference is desired for.
+     * @return The item reference.
+     */
     public Item getItem(String itemName){
         for (Item item : items) {
             if (item.getItemName().equalsIgnoreCase(itemName)) {
@@ -163,9 +187,10 @@ public class Room {
         }
         return null;
     }
+
     /**
      * Gets room name.
-     * @return room's name
+     * @return Current room's name
      */
     public String getRoomName(){
         return roomName;
@@ -184,29 +209,41 @@ public class Room {
         return false;
     }
 
-    //public void removeBrokenItems() will remove all of the broken items within the room if called
+    /**
+     * Removes all broken items from the room when called.
+     */
     public void removeBrokenItems(){
         items.removeIf(Item::isItemBroken);
     }
 
+    /**
+     * Adds a npc to the list of npcs that are going to shriek (shrieklist).
+     * @param npc The npc who is going to shriek.
+     */
     public void addShrieker(NPC npc){
         shrieklist.add(npc);
     }
 
+    /**
+     * Checks the shriek list for all npcs that are going to shriek, determines how they are going to shriek, creates a
+     * string consisting of all their shrieks, calls a method to clear the shriek list, and returns a string
+     * consisting of all their shrieks.
+     * @return A string consisting off all the shrieking npcs shrieks.
+     */
     public String shriek(){
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for(NPC npc: shrieklist){
             if(npc.getScarednessLevel() < 50){
-                result += npc.getName() + " shrieks\n";
+                result.append(npc.getName()).append(" shrieks\n");
             } else if (npc.getScarednessLevel() < 100){
-                result += npc.getName() + " shrieks, shrieks, and shrieks\n";
+                result.append(npc.getName()).append(" shrieks, shrieks, and shrieks\n");
             } else{
-                result += npc.getName() + " lets out this profound shriek, rattling everyone's ears\n";
+                result.append(npc.getName()).append(" lets out this profound shriek, rattling everyone's ears\n");
             }
         }
 
         shrieklist.clear();
 
-        return result;
+        return result.toString();
     }
 }

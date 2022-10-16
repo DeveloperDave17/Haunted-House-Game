@@ -11,10 +11,9 @@ public class Child extends NPC{
         super(name, desc);
     }
 
-    /*
-    @override
-    public void scareNPC(int scareScore){} //Will multiply scare score by 1.5x before adding to scareLevel and check
-                                             if the move() method should be called(if scarednessLevel > 50)
+    /**
+     * Calls NPCs method for scaring the npc but with an increased scareScore of 1.5 times the original amount.
+     * @param scareScore The amount the scarednessLevel is to increase by.
      */
     @Override
     public void scareNPC(double scareScore){

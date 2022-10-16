@@ -13,8 +13,4 @@ public class Adult extends NPC{
     public Adult(String adultName, String adultDesc){
         super(adultName, adultDesc);
     }
-
-    //public void scareNPC(int scareScore){} will increase the adults scaredness level by the associated amount and
-    //                                       check if the move() method should be called(if scarednessLevel > 50)
-
 }

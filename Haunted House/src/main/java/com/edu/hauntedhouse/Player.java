@@ -36,96 +36,104 @@ public class Player extends Character{
                     System.out.println("shake:item - shakes an item");
                     System.out.println("possess:item - possesses an item");
                     System.out.println("throw:item - throws an item");
-                    System.out.println("exit or quit will allow you to leave the game before the time is up");
+                    System.out.println("exit or quit will allow you to leave the game before the time is up\n");
                 }
                 case "look" -> System.out.println(this.getRoomReference());
-                case "north" -> System.out.println(move("north") ? "Successfully moved" : "Failed to move");
-                case "east" -> System.out.println(move("east") ? "Successfully moved" : "Failed to move");
-                case "south" -> System.out.println(move("south") ? "Successfully moved" : "Failed to move");
-                case "west" -> System.out.println(move("west") ? "Successfully moved" : "Failed to move");
+                case "north" -> System.out.println(move("north") ? "Successfully moved\n" : "Failed to move\n");
+                case "east" -> System.out.println(move("east") ? "Successfully moved\n" : "Failed to move\n");
+                case "south" -> System.out.println(move("south") ? "Successfully moved\n" : "Failed to move\n");
+                case "west" -> System.out.println(move("west") ? "Successfully moved\n" : "Failed to move\n");
                 case "shake" -> {
-                    boolean[] results = haunt(inputSplit[1], "SHAKE");
-                    if(results[0]){
-                        if(results[1]){
+                    if(foundItem(inputSplit[1])){
+                        if(haunted(inputSplit[1], "SHAKE")){
                             System.out.println("Successfully shook " + inputSplit[1]);
                             System.out.println(this.getRoomReference().shriek());
                         } else {
-                            System.out.println(inputSplit[1] + " could not be shaken.");
+                            System.out.println(inputSplit[1] + " could not be shaken.\n");
                         }
                     }else{
-                        System.out.println(inputSplit[1] + " is not in this room");
+                        System.out.println(inputSplit[1] + " is not in this room\n");
                     }
                 }
                 case "possess" -> {
-                    boolean[] results = haunt(inputSplit[1], "POSSESS");
-                    if(results[0]){
-                        if(results[1]){
+                    if(foundItem(inputSplit[1])){
+                        if(haunted(inputSplit[1], "POSSESS")){
                             System.out.println("Successfully possessed " + inputSplit[1]);
                             System.out.println(this.getRoomReference().shriek());
                         } else {
-                            System.out.println(inputSplit[1] + " could not be possessed.");
+                            System.out.println(inputSplit[1] + " could not be possessed.\n");
                         }
                     }else{
-                        System.out.println(inputSplit[1] + " is not in this room");
+                        System.out.println(inputSplit[1] + " is not in this room\n");
                     }
                 }
                 case "throw" -> {
-                    boolean[] results = haunt(inputSplit[1], "THROW");
-                    if(results[0]){
-                        if(results[1]){
+                    if(foundItem(inputSplit[1])){
+                        if(haunted(inputSplit[1], "THROW")){
                             System.out.println("Successfully threw the " + inputSplit[1]);
                             System.out.println(this.getRoomReference().shriek());
                         }else {
-                            System.out.println(inputSplit[1] + " could not be thrown.");
+                            System.out.println(inputSplit[1] + " could not be thrown.\n");
                         }
                     }else{
-                        System.out.println(inputSplit[1] + " is not in this room.");
+                        System.out.println(inputSplit[1] + " is not in this room.\n");
                     }
                 }
                 case "exit", "quit" -> play = false;
-                default -> System.out.println("Please enter an actual command like help");
+                default -> System.out.println("Please enter an actual command like help\n");
             }
         }
     }
 
-    //public void haunt(Item item, ItemActions action)  will haunt an item within a room sending out a haunting
-    //                                                  notification to everyone in the room. Calls itemInRoom()
-    //                                                  to check if an item is in the room then calls
-    //                                                  item.supportsAction() before doing the action of
-    //                                                  hauntNotification()
-    private boolean[] haunt(String itemName, String action){
-        if(this.getRoomReference().itemInRoom(itemName)){
-            Item item = this.getRoomReference().getItem(itemName);
-            if(item.supportsAction(Item.ItemActions.valueOf(action))){
-                this.getRoomReference().hauntNotification(itemName, action);
-                boolean[] success = {true, true};
-                return success;
-            }
-            boolean[] actionNotSupported = {true, false};
-            return actionNotSupported;
-        }
-        boolean [] itemNotFound = {false, false};
-        return itemNotFound;
+    /**
+     * Looks for a specific item in the player's current room, outputs a boolean value based upon whether it was found.
+     * @param itemName The name of the item to be searched for.
+     * @return Returns a boolean value based upon whether the item was found.
+     */
+    private boolean foundItem(String itemName){
+        return this.getRoomReference().itemInRoom(itemName);
     }
 
-    //public void move(Room room1, Room room2)     will allow the player to move from one room to a connected room
-    //                                             by checking if the player can move to the specified room
-    //                                             using Room methods connectedRoom() then playerLeaveRoom() then
-    //                                             addPlayer()
+    /**
+     * Attempts to haunt a specified item using a specified action. Calls the item supportsAction method and sends a
+     * haunt notification if the item action was supported.
+     * @param itemName The name of the item used for haunting purposes.
+     * @param action The action desired to be done to the item.
+     * @return Returns a boolean value based upon whether the action was done to the item or not.
+     */
+    private boolean haunted(String itemName, String action){
+        Item item = this.getRoomReference().getItem(itemName);
+        if(item.supportsAction(Item.ItemActions.valueOf(action))) {
+            this.getRoomReference()
+                    .hauntNotification(itemName, action);
+            return true;
+        }
+        return false;
+    }
 
+    /**
+     * Attempts to move the player with a specified cardinal direction.
+     * @param direction The direction the player wishes to move.
+     * @return A boolean value based upon whether the player successfully moved or not.
+     */
     public Boolean move(String direction){
         if(this.getRoomReference().roomConnected(direction)){
             Room temp;
             if(direction.equalsIgnoreCase("north")){
-                temp = this.getRoomReference().getNorthRoom();
+                temp = this.getRoomReference()
+                                .getNorthRoom();
             } else if(direction.equalsIgnoreCase("east")){
-                temp = this.getRoomReference().getEastRoom();
+                temp = this.getRoomReference()
+                                .getEastRoom();
             } else if(direction.equalsIgnoreCase("south")){
-                temp = this.getRoomReference().getSouthRoom();
+                temp = this.getRoomReference()
+                                .getSouthRoom();
             } else{
-                temp = this.getRoomReference().getWestRoom();
+                temp = this.getRoomReference()
+                                .getWestRoom();
             }
-            this.getRoomReference().playerLeaveRoom();
+            this.getRoomReference()
+                    .playerLeaveRoom();
             temp.addPlayer(this);
             return true;
         }else{
