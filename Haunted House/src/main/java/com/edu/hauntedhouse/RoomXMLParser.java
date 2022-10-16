@@ -28,19 +28,23 @@ public class RoomXMLParser extends DefaultHandler{
             roomHashMap.put(roomName, rooms.get(roomCount));
             if(roomHashMap.containsKey(atts.getValue("north"))){
                 roomHashMap.get(atts.getValue("north")).addSouthRoom(rooms.get(roomCount));
-                rooms.get(roomCount).addNorthRoom(roomHashMap.get(atts.getValue("north")));
+                rooms.get(roomCount)
+                        .addNorthRoom(roomHashMap.get(atts.getValue("north")));
             }
             if(roomHashMap.containsKey(atts.getValue("south"))){
                 roomHashMap.get(atts.getValue("south")).addNorthRoom(rooms.get(roomCount));
-                rooms.get(roomCount).addSouthRoom(roomHashMap.get(atts.getValue("south")));
+                rooms.get(roomCount)
+                        .addSouthRoom(roomHashMap.get(atts.getValue("south")));
             }
             if(roomHashMap.containsKey(atts.getValue("east"))){
                 roomHashMap.get(atts.getValue("east")).addWestRoom(rooms.get(roomCount));
-                rooms.get(roomCount).addEastRoom(roomHashMap.get(atts.getValue("east")));
+                rooms.get(roomCount)
+                        .addEastRoom(roomHashMap.get(atts.getValue("east")));
             }
             if(roomHashMap.containsKey(atts.getValue("west"))){
                 roomHashMap.get(atts.getValue("west")).addEastRoom(rooms.get(roomCount));
-                rooms.get(roomCount).addWestRoom(roomHashMap.get(atts.getValue("west")));
+                rooms.get(roomCount)
+                        .addWestRoom(roomHashMap.get(atts.getValue("west")));
             }
             roomCount++; roomItemCount =0;
         }
@@ -50,21 +54,26 @@ public class RoomXMLParser extends DefaultHandler{
             rooms.get(roomCount-1).addItem(new Item(atts.getValue("name"), atts.getValue("description")));
             itemActions = atts.getValue("actions").split(",");
             for(String s: itemActions) {
-                rooms.get(roomCount - 1).getItem(roomItemCount).addItemAction(Item.ItemActions.valueOf(s.toUpperCase()));
+                rooms.get(roomCount - 1)
+                        .getItem(roomItemCount)
+                        .addItemAction(Item.ItemActions.valueOf(s.toUpperCase()));
             }
             roomItemCount++;
         }
 
         if(qName.equals("adult")){
-            rooms.get(roomCount-1).addNPC(new Adult(atts.getValue("name"), atts.getValue("description")));
+            rooms.get(roomCount-1)
+                    .addNPC(new Adult(atts.getValue("name"), atts.getValue("description")));
         }
 
         if(qName.equals("child")){
-            rooms.get(roomCount-1).addNPC(new Child(atts.getValue("name"), atts.getValue("description")));
+            rooms.get(roomCount-1)
+                    .addNPC(new Child(atts.getValue("name"), atts.getValue("description")));
         }
 
         if(qName.equals("player")){
-            rooms.get(roomCount-1).addPlayer(new Player(atts.getValue("name"), atts.getValue("description")));
+            rooms.get(roomCount-1)
+                    .addPlayer(new Player(atts.getValue("name"), atts.getValue("description")));
         }
     }
 
