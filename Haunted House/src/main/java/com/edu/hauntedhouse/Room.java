@@ -1,0 +1,212 @@
+package com.edu.hauntedhouse;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
+
+/**
+ * A Room contains a name, description, npcs, number of npcs , player, adjacent room references, and items.
+ */
+public class Room {
+
+    private final String roomName;
+    private final String roomDesc;
+    private NPC[] npcs = new NPC[5];
+    private ArrayList<NPC> shrieklist = new ArrayList<>();
+    private Player player;
+    private final Room[] ROOMS = new Room[4];
+    private final int NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3;
+    private int numNPCs = 0;
+    private ArrayList<Item> items = new ArrayList<>();
+
+    /**
+     * Creates a Room Object with a room name and description
+     * @param roomName A room's name.
+     * @param roomDesc A room's Description.
+     */
+    public Room(String roomName, String roomDesc) {
+        this.roomName = roomName;
+        this.roomDesc = roomDesc;
+    }
+
+    /**
+     * Adds an npc (adult or child) to the room and increments numNPCs (Representing our number of npcs in the room).
+     * @param npc (adult or child)
+     */
+    public void addNPC(NPC npc) {
+        if(numNPCs < 5) {
+            npcs[numNPCs++] = npc;
+            npc.setRoomReference(this);
+        }
+        else {System.out.println("There can't be more than 5 NPCs in a room");}
+    }
+
+    /**
+     * Adds a player to the room.
+     * @param player A reference to the player object.
+     */
+    public void addPlayer(Player player){
+        this.player = player;
+        player.setRoomReference(this);
+    }
+
+    @Override
+    public String toString(){
+        ArrayList<String> descs = new ArrayList<>();
+        if(ROOMS[NORTH] != null){descs.add("\n" + ROOMS[NORTH].getRoomName() + " to the North");}
+        if(ROOMS[SOUTH] != null){descs.add("\n" + ROOMS[SOUTH].getRoomName() + " to the South");}
+        if(ROOMS[EAST] != null){descs.add("\n" + ROOMS[EAST].getRoomName() + " to the East");}
+        if(ROOMS[WEST] != null){descs.add("\n" + ROOMS[WEST].getRoomName() + " to the West");}
+        for(int i = 0; i < numNPCs; i++){descs.add("\n" + npcs[i].toString());}
+        if(player != null){descs.add("\n" + player.toString());}
+        items.forEach(item -> descs.add("\n" + item.toString()));
+        String desc = descs.toString().replace("[", "").replace("]", "");
+        return roomName + " : " + roomDesc + desc;
+    }
+
+
+    public void addNorthRoom(Room northRoom){ROOMS[NORTH] = northRoom;}
+    public void addSouthRoom(Room southRoom){ROOMS[SOUTH] = southRoom;}
+    public void addEastRoom(Room eastRoom){ROOMS[EAST] = eastRoom;}
+    public void addWestRoom(Room westRoom){ROOMS[WEST] = westRoom;}
+    public Room getNorthRoom(){return ROOMS[NORTH];}
+    public Room getSouthRoom(){return ROOMS[SOUTH];}
+    public Room getEastRoom(){return ROOMS[EAST];}
+    public Room getWestRoom(){return ROOMS[WEST];}
+        //public boolean roomConnected(Room room){} //Will return a boolean value based upon if the room is connected
+        //                                          (exists to the NORTH,SOUTH,EAST, or WEST)
+    public boolean roomConnected(String direction){
+        if(direction.equalsIgnoreCase("north")){
+            return ROOMS[NORTH] != null;
+        } else if(direction.equalsIgnoreCase("east")){
+            return ROOMS[EAST] != null;
+        } else if(direction.equalsIgnoreCase("south")){
+            return ROOMS[SOUTH] != null;
+        } else{
+            return ROOMS[WEST] != null;
+        }
+    }
+
+
+    //public void hauntNotification() will send out a scaredness level increase for each npc in the room by calling
+    //                                the scareNPC() method of each npc.
+    public void hauntNotification(String itemName, String action){
+        Random random = new Random();
+        //Ensuring all NPCs are scared (Prevents NPCs leaving rooms from changing the size of the iterated array)
+        ArrayList<NPC> temp = new ArrayList<>(Arrays.asList(npcs).subList(0, numNPCs));
+
+        if(action.equals("SHAKE")){
+            for(NPC npc:temp){
+                npc.scareNPC(5 + 10*random.nextDouble());
+            }
+        }
+        if(action.equals("POSSESS")){
+            for(NPC npc:temp){
+                npc.scareNPC(10 + 15*random.nextDouble());
+            }
+        }
+        if(action.equals("THROW")){
+            for(NPC npc:temp){
+                npc.scareNPC(20 + 20*random.nextDouble());
+            }
+            for(Item item: items){
+                if(item.getItemName().equalsIgnoreCase(itemName)){
+                    item.breakItem();
+                }
+            }
+        }
+    }
+
+    //public void playerLeaveRoom() will remove the player from the room
+    public void playerLeaveRoom(){
+        player = null;
+    }
+    //public void npcLeaveRoom() will remove the npc from the room
+    public void npcLeaveRoom(NPC npc){
+        int i;
+        //finding the index of the npc within the npcs array
+        for(i = 0; i < numNPCs; i++){
+            if(npcs[i] == npc){
+                break;
+            }
+        }
+        if(i < numNPCs - 1){
+            //moving all the npcs up 1 in the array and ensuring a duplicate wont exist
+            for(int idx = i; idx < numNPCs; idx++){
+                npcs[idx] = npcs[idx+1];
+                npcs[idx+1] = null;
+            }
+        } else{
+            npcs[i] = null;
+        }
+        numNPCs--;
+    }
+
+    /**
+     * Adds an item to the items arraylist.
+     * @param item The reference to a specific item object.
+     */
+    public void addItem(Item item) {
+        items.add(item);
+    }
+
+
+    public Item getItem(int index){
+        return items.get(index);
+    }
+
+    public Item getItem(String itemName){
+        for (Item item : items) {
+            if (item.getItemName().equalsIgnoreCase(itemName)) {
+                return item;
+            }
+        }
+        return null;
+    }
+    /**
+     * Gets room name.
+     * @return room's name
+     */
+    public String getRoomName(){
+        return roomName;
+    }
+
+    public Player getPlayer(){
+        return player;
+    }
+    //public boolean itemInRoom() will check to see if an item is in the room
+    public boolean itemInRoom(String itemName){
+        for (Item item : items) {
+            if (item.getItemName().equalsIgnoreCase(itemName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //public void removeBrokenItems() will remove all of the broken items within the room if called
+    public void removeBrokenItems(){
+        items.removeIf(Item::isItemBroken);
+    }
+
+    public void addShrieker(NPC npc){
+        shrieklist.add(npc);
+    }
+
+    public String shriek(){
+        String result = "";
+        for(NPC npc: shrieklist){
+            if(npc.getScarednessLevel() < 50){
+                result += npc.getName() + " shrieks\n";
+            } else if (npc.getScarednessLevel() < 100){
+                result += npc.getName() + " shrieks, shrieks, and shrieks\n";
+            } else{
+                result += npc.getName() + " lets out this profound shriek, rattling everyone's ears\n";
+            }
+        }
+
+        shrieklist.clear();
+
+        return result;
+    }
+}

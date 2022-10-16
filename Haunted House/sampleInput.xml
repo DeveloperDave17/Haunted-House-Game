@@ -1,0 +1,39 @@
+<xml version="1.0" encoding="UTF-8">
+<room name="Den" description="a large round room with violet draperies" north="Guest" east="Kitchen" south="Living Room">
+  <item name="White Lamp" description="a small white lamp near the north door" actions="shake,throw"/>
+  <item name="Stormtrooper" description="a full size storm trooper costume" actions="shake,possess"/>
+  <adult name="Mary" description="a tall woman"/>
+  <player name="Rex" description="one who-s always trying to scare the adults and children"/>
+</room>
+<room name="Guest" description="this one used to be storage, covered in cobwebs, now a very barren guestroom" south="Den">
+  <item name="Small Bed" description="an undersized bed with a lumpy matress" actions="shake"/>
+  <adult name="Francois" description="a visitor from out of town"/>
+</room>
+<room name="Kitchen" description="dishes are everywhere, something has spilled on the floor" south="Dining Room" west="Den">
+  <item name="Dirty Dish" description="a plate with some old dried food on it" actions="shake,throw"/>
+  <item name="Puddle" description="it's not clear what the puddle is made of" actions="possess"/>
+</room>
+<room name="Living Room" description="it looks like the family hangs out here a lot" north="Den" south="Bedroom" west="Kids Room" east="Dining Room">
+  <item name="Fireplace" description="a brick fireplace with a roaring fire" actions="possess"/>
+  <item name="Sofa" description="an old orange sofa with a broken arm" actions="shake,possess"/>
+  <item name="Doll" description="a creepy doll with a missing head" actions="shake,possess,throw"/>
+  <child name="Adam" description="a five year old boy wearing a baseball cap"/>
+  <adult name="Aaron" description="a short, balding old man"/>
+</room>
+<room name="Dining Room" description="a table, far too big, sits in the middle of the room" north="Kitchen" west="Living Room">
+  <item name="Table" description="a huge table" actions="shake"/>
+</room>
+<room name="Kids Room" description="strangely, the cleanest room in the house" south="Closet" east="Living Room">
+  <item name="Stuffed Cat" description="the favorite toy of Adeline" actions="possess,shake,throw"/>
+  <item name="Desk Chair" description="a kid-sized chair, orange and hard plastic" actions="shake,throw"/>
+  <child name="Adeline" description="a seven year old girl with long blonde hair"/>
+</room>
+<room name="Bedroom" description="it-s very cold -- the window is broken" north="Living Room" west="Closet">
+  <item name="Large Bed" description="a king sized bed, the nicest in the house" actions="shake"/>
+  <item name="Puzzle" description="an unfinished puzzle sitting on the floor" actions="shake,throw"/>
+</room>
+<room name="Closet" description="shared between the kids and parents" north="Kids Room" east="Bedroom">
+  <item name="Spider" description="an unexpected guest" actions="shake,throw,possess"/>
+  <item name="Clothing" description="an outfit ready for school tomorrow" actions="possess,throw"/>
+</room>
+</xml>
