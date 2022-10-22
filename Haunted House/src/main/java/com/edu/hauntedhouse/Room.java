@@ -17,6 +17,7 @@ public class Room {
     private final Room[] ROOMS = new Room[4];
     private final int NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3;
     private int numNPCs = 0;
+    private static int numNPCsInHouse = 0;
     private ArrayList<Item> items = new ArrayList<>();
 
     /**
@@ -37,6 +38,7 @@ public class Room {
         if(numNPCs < 5) {
             npcs[numNPCs++] = npc;
             npc.setRoomReference(this);
+            Room.numNPCsInHouse++;
         }
         else {System.out.println("There can't be more than 5 NPCs in a room");}
     }
@@ -155,6 +157,7 @@ public class Room {
             npcs[i] = null;
         }
         numNPCs--;
+        numNPCsInHouse--;
     }
 
     /**
@@ -245,5 +248,9 @@ public class Room {
         shrieklist.clear();
 
         return result.toString();
+    }
+
+    public static int getNumNPCsInHouse(){
+        return numNPCsInHouse;
     }
 }

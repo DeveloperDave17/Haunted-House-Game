@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ArrayList<Room> rooms;
+        Player player;
         String fileName;
         SAXParserFactory spf = SAXParserFactory.newInstance();
         Scanner sc = new Scanner(System.in, StandardCharsets.UTF_8);
@@ -28,17 +28,12 @@ public class Main {
             SAXParser saxParser = spf.newSAXParser();
             RoomXMLParser sxp = new RoomXMLParser();
             saxParser.parse(input, sxp);
-            rooms = sxp.getRooms();
+            player = sxp.getPlayer();
         } catch (ParserConfigurationException | SAXException |
                  IOException e) {
             throw new RuntimeException(e);
         }
 
-        for (Room room : rooms) {
-            if (room.getPlayer() != null) {
-                room.getPlayer().Play(sc);
-                break;
-            }
-        }
+        player.Play(sc);
     }
 }

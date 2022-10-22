@@ -18,6 +18,7 @@ public class Player extends Character{
 
         boolean play = true;
 
+        HauntedTimer.initTimer(60);
         while(play){
 
             System.out.print("Enter a command: ");

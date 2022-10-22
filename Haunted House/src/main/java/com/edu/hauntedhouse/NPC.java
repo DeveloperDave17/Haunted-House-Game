@@ -7,6 +7,8 @@ public class NPC extends Character{
 
     private double scarednessLevel = 0;
 
+    private boolean movedRoom = false;
+
     /**
      * Sends the npcs name and description to the character class method for creation.
      * @param name Name of npc.
@@ -28,10 +30,17 @@ public class NPC extends Character{
         this.getRoomReference().addShrieker(this);
         if(scarednessLevel >= 100){
             this.getRoomReference().npcLeaveRoom(this);
-        } else if(scarednessLevel >= 50){
+            if(Room.getNumNPCsInHouse() == 0){
+                System.out.println("Congrats YOU Won");
+                System.exit(0);
+            }else{
+                HauntedTimer.addTime(30);
+            }
+        } else if(scarednessLevel >= 50 && !movedRoom){
             move();
             this.getRoomReference().removeBrokenItems();
-        }
+            movedRoom = true;
+        } 
     }
 
     /**

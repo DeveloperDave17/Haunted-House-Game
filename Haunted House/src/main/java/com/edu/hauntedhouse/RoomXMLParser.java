@@ -77,8 +77,13 @@ public class RoomXMLParser extends DefaultHandler{
         }
     }
 
-    // Works after the parse is done...
-    public ArrayList<Room> getRooms() {
-        return rooms;
+    public Player getPlayer() {
+        Player player = null;
+        for (Room room : rooms) {
+            if (room.getPlayer() != null) {
+                player = room.getPlayer();
+            }
+        }
+        return player;
     }
 }
