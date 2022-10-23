@@ -25,22 +25,20 @@ public class NPC extends Character{
      * method.
      * @param scareScore The amount the scarednessLevel is to increase by.
      */
-    public void scareNPC(double scareScore){
+    public String scareNPC(double scareScore){
         scarednessLevel += scareScore;
-        this.getRoomReference().addShrieker(this);
+
         if(scarednessLevel >= 100){
             this.getRoomReference().npcLeaveRoom(this);
-            if(Room.getNumNPCsInHouse() == 0){
-                System.out.println("Congrats YOU Won");
-                System.exit(0);
-            }else{
-                HauntedTimer.addTime(30);
-            }
+            HauntedTimer.addTime(30);
+            return getName() + " lets out this profound shriek, rattling everyone's ears\n";
         } else if(scarednessLevel >= 50 && !movedRoom){
             move();
             this.getRoomReference().removeBrokenItems();
             movedRoom = true;
-        } 
+            return getName() + " shrieks, shrieks, and shrieks\n";
+        }
+        return getName() + " shrieks\n";
     }
 
     /**
@@ -81,5 +79,9 @@ public class NPC extends Character{
 
     public double getScarednessLevel(){
         return scarednessLevel;
+    }
+
+    public boolean getMovedRoom(){
+        return movedRoom;
     }
 }

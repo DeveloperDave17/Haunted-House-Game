@@ -16,7 +16,7 @@ public class Child extends NPC{
      * @param scareScore The amount the scarednessLevel is to increase by.
      */
     @Override
-    public void scareNPC(double scareScore){
-        super.scareNPC(scareScore*1.5);
+    public String scareNPC(double scareScore){
+        return super.scareNPC(scareScore*1.5);
     }
 }

@@ -29,4 +29,8 @@ public class HauntedTimer {
     public static void addTime(int secs){
         timeLeft.addAndGet(30);
     }
+
+    public static int getTime(){
+        return timeLeft.get();
+    }
 }

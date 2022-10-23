@@ -12,7 +12,6 @@ public class Room {
     private final String roomName;
     private final String roomDesc;
     private NPC[] npcs = new NPC[5];
-    private ArrayList<NPC> shrieklist = new ArrayList<>();
     private Player player;
     private final Room[] ROOMS = new Room[4];
     private final int NORTH = 0, SOUTH = 1, EAST = 2, WEST = 3;
@@ -101,24 +100,28 @@ public class Room {
      * @param itemName Name of item used for haunting.
      * @param action Action to be done to the item.
      */
-    public void hauntNotification(String itemName, String action){
+    public String hauntNotification(String itemName, String action){
         Random random = new Random();
         //Ensuring all NPCs are scared (Prevents NPCs leaving rooms from changing the size of the iterated array)
         ArrayList<NPC> temp = new ArrayList<>(Arrays.asList(npcs).subList(0, numNPCs));
+        StringBuilder shrieks = new StringBuilder();
 
         if(action.equals("SHAKE")){
             for(NPC npc:temp){
-                npc.scareNPC(5 + 10*random.nextDouble());
+                shrieks.append(
+                        npc.scareNPC(5 + 10*random.nextDouble()));
             }
         }
         if(action.equals("POSSESS")){
             for(NPC npc:temp){
-                npc.scareNPC(10 + 15*random.nextDouble());
+                shrieks.append(
+                        npc.scareNPC(10 + 15*random.nextDouble()));
             }
         }
         if(action.equals("THROW")){
             for(NPC npc:temp){
-                npc.scareNPC(20 + 20*random.nextDouble());
+                shrieks.append(
+                        npc.scareNPC(20 + 20*random.nextDouble()));
             }
             for(Item item: items){
                 if(item.getItemName().equalsIgnoreCase(itemName)){
@@ -126,6 +129,8 @@ public class Room {
                 }
             }
         }
+
+        return shrieks.toString();
     }
 
     /**
@@ -202,52 +207,12 @@ public class Room {
     public Player getPlayer(){
         return player;
     }
-    //public boolean itemInRoom() will check to see if an item is in the room
-    public boolean itemInRoom(String itemName){
-        for (Item item : items) {
-            if (item.getItemName().equalsIgnoreCase(itemName)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Removes all broken items from the room when called.
      */
     public void removeBrokenItems(){
         items.removeIf(Item::isItemBroken);
-    }
-
-    /**
-     * Adds a npc to the list of npcs that are going to shriek (shrieklist).
-     * @param npc The npc who is going to shriek.
-     */
-    public void addShrieker(NPC npc){
-        shrieklist.add(npc);
-    }
-
-    /**
-     * Checks the shriek list for all npcs that are going to shriek, determines how they are going to shriek, creates a
-     * string consisting of all their shrieks, calls a method to clear the shriek list, and returns a string
-     * consisting of all their shrieks.
-     * @return A string consisting off all the shrieking npcs shrieks.
-     */
-    public String shriek(){
-        StringBuilder result = new StringBuilder();
-        for(NPC npc: shrieklist){
-            if(npc.getScarednessLevel() < 50){
-                result.append(npc.getName()).append(" shrieks\n");
-            } else if (npc.getScarednessLevel() < 100){
-                result.append(npc.getName()).append(" shrieks, shrieks, and shrieks\n");
-            } else{
-                result.append(npc.getName()).append(" lets out this profound shriek, rattling everyone's ears\n");
-            }
-        }
-
-        shrieklist.clear();
-
-        return result.toString();
     }
 
     public static int getNumNPCsInHouse(){

@@ -45,10 +45,13 @@ public class Player extends Character{
                 case "south" -> System.out.println(move("south") ? "Successfully moved\n" : "Failed to move\n");
                 case "west" -> System.out.println(move("west") ? "Successfully moved\n" : "Failed to move\n");
                 case "shake" -> {
-                    if(foundItem(inputSplit[1])){
-                        if(haunted(inputSplit[1], "SHAKE")){
+                    Item item = getRoomReference().getItem(inputSplit[1]);
+                    if(!(item == null)){
+                        //Checking to see if an items action is supported
+                        if(item.supportsAction(Item.ItemActions.valueOf("SHAKE"))){
+                            String shrieks = haunt(item, "SHAKE");
                             System.out.println("Successfully shook " + inputSplit[1]);
-                            System.out.println(this.getRoomReference().shriek());
+                            System.out.println(shrieks);
                         } else {
                             System.out.println(inputSplit[1] + " could not be shaken.\n");
                         }
@@ -57,10 +60,13 @@ public class Player extends Character{
                     }
                 }
                 case "possess" -> {
-                    if(foundItem(inputSplit[1])){
-                        if(haunted(inputSplit[1], "POSSESS")){
+                    Item item = getRoomReference().getItem(inputSplit[1]);
+                    if(!(item == null)){
+                        //Checking to see if an items action is supported
+                        if(item.supportsAction(Item.ItemActions.valueOf("POSSESS"))){
+                            String shrieks = haunt(item, "POSSESS");
                             System.out.println("Successfully possessed " + inputSplit[1]);
-                            System.out.println(this.getRoomReference().shriek());
+                            System.out.println(shrieks);
                         } else {
                             System.out.println(inputSplit[1] + " could not be possessed.\n");
                         }
@@ -69,47 +75,50 @@ public class Player extends Character{
                     }
                 }
                 case "throw" -> {
-                    if(foundItem(inputSplit[1])){
-                        if(haunted(inputSplit[1], "THROW")){
-                            System.out.println("Successfully threw the " + inputSplit[1]);
-                            System.out.println(this.getRoomReference().shriek());
-                        }else {
+                    Item item = getRoomReference().getItem(inputSplit[1]);
+                    if(!(item == null)){
+                        //Checking to see if an items action is supported
+                        if(item.supportsAction(Item.ItemActions.valueOf("THROW"))){
+                            String shrieks = haunt(item, "THROW");
+                            System.out.println("Successfully threw " + inputSplit[1]);
+                            System.out.println(shrieks);
+                        } else {
                             System.out.println(inputSplit[1] + " could not be thrown.\n");
                         }
                     }else{
-                        System.out.println(inputSplit[1] + " is not in this room.\n");
+                        System.out.println(inputSplit[1] + " is not in this room\n");
                     }
                 }
                 case "exit", "quit" -> play = false;
                 default -> System.out.println("Please enter an actual command like help\n");
             }
-        }
-    }
 
-    /**
-     * Looks for a specific item in the player's current room, outputs a boolean value based upon whether it was found.
-     * @param itemName The name of the item to be searched for.
-     * @return Returns a boolean value based upon whether the item was found.
-     */
-    private boolean foundItem(String itemName){
-        return this.getRoomReference().itemInRoom(itemName);
+            if(Room.getNumNPCsInHouse() == 0) {
+                System.out.println("Congrats YOU Won");
+                System.exit(0);
+            }
+
+            //Keeps the time from being displayed after exiting the game
+            if(play) {
+                System.out.println("You have " + HauntedTimer.getTime() + " seconds left!");
+            }
+        }
+
+        //Player chose to exit
+        System.exit(0);
     }
 
     /**
      * Attempts to haunt a specified item using a specified action. Calls the item supportsAction method and sends a
      * haunt notification if the item action was supported.
-     * @param itemName The name of the item used for haunting purposes.
+     * @param item item used for haunting purposes.
      * @param action The action desired to be done to the item.
      * @return Returns a boolean value based upon whether the action was done to the item or not.
      */
-    private boolean haunted(String itemName, String action){
-        Item item = this.getRoomReference().getItem(itemName);
-        if(item.supportsAction(Item.ItemActions.valueOf(action))) {
-            this.getRoomReference()
-                    .hauntNotification(itemName, action);
-            return true;
-        }
-        return false;
+    private String haunt(Item item, String action){
+            String shrieks = this.getRoomReference()
+                                    .hauntNotification(item.getItemName(), action);
+            return shrieks;
     }
 
     /**
