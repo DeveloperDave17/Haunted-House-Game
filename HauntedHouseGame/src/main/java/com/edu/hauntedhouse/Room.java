@@ -153,7 +153,10 @@ public class Room {
             }
         }
         if(i < numNPCs - 1){
-            //moving all the npcs up 1 in the array and ensuring a duplicate won't exist
+            /*
+            Shrinking the list of npcs, moving all the npcs who appear after the removed npc closer to the beginning
+            of the array.
+             */
             for(int idx = i; idx < numNPCs; idx++){
                 npcs[idx] = npcs[idx+1];
                 npcs[idx+1] = null;
@@ -220,12 +223,20 @@ public class Room {
     }
 
     public NPC getNPC(String name){
-        int i;
-        for(i = 0; i < numNPCs; i++){
+        for(int i = 0; i < numNPCs; i++){
             if(npcs[i].getName().equals(name)){
                 return npcs[i];
             }
         }
         return null;
+    }
+
+    public int getNPCIndex(NPC npc){
+        for(int i = 0; i < numNPCs; i++){
+            if(npcs[i].getName().equals(npc.getName())){
+                return i;
+            }
+        }
+        return -1;
     }
 }

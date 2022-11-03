@@ -89,6 +89,7 @@ public class Player extends Character{
                         System.out.println(inputSplit[1] + " is not in this room\n");
                     }
                 }
+                case "secret" -> HauntedTimer.pauseTimer();
                 case "exit", "quit" -> play = false;
                 default -> System.out.println("Please enter an actual command like help\n");
             }

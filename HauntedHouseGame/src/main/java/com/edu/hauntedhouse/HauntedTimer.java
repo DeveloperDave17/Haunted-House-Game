@@ -33,4 +33,8 @@ public class HauntedTimer {
     public static int getTime(){
         return timeLeft.get();
     }
+
+    public static void pauseTimer(){
+        timer.cancel();
+    }
 }
