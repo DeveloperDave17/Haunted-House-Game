@@ -15,6 +15,8 @@ public class HauntedHouseTester {
     private Adult adult;
     private Child child;
 
+    private BinarySearchTree<String, Room> bst;
+
 
     public void beforeEach(){
         room1 = new Room("Starting Room", "Welcome to the starting test zone.");
@@ -41,6 +43,37 @@ public class HauntedHouseTester {
 
         player = new Player("Dave", "The ultimate creator of this games world");
         room1.addPlayer(player);
+    }
+
+    public void beforeBinarySearchTests(){
+        bst = new BinarySearchTree<>();
+        Room temp1 = new Room("Living Room", "");
+        Room temp2 = new Room("Den", "");
+        Room temp3 = new Room("Arcade", "");
+        Room temp4 = new Room("Dining Room", "");
+        Room temp5 = new Room("Closet", "");
+        Room temp6 = new Room("Restroom", "");
+        Room temp7 = new Room("Opera Theatre", "");
+        Room temp8 = new Room("Nathan's Room", "");
+        Room temp9 = new Room("Piano Room", "");
+        Room temp10 = new Room("Queen Bedroom", "");
+        Room temp11 = new Room("Study Room", "");
+        Room temp12 = new Room("Running Room", "");
+        Room temp13 = new Room("Table Hangout", "");
+
+        bst.add(temp1.getRoomName(),temp1);
+        bst.add(temp2.getRoomName(),temp2);
+        bst.add(temp3.getRoomName(),temp3);
+        bst.add(temp4.getRoomName(),temp4);
+        bst.add(temp5.getRoomName(),temp5);
+        bst.add(temp6.getRoomName(),temp6);
+        bst.add(temp7.getRoomName(),temp7);
+        bst.add(temp8.getRoomName(),temp8);
+        bst.add(temp9.getRoomName(),temp9);
+        bst.add(temp10.getRoomName(),temp10);
+        bst.add(temp11.getRoomName(), temp11);
+        bst.add(temp12.getRoomName(), temp12);
+        bst.add(temp13.getRoomName(), temp13);
     }
 
     @Test
@@ -194,4 +227,106 @@ public class HauntedHouseTester {
         assertFalse(item2.supportsAction(Item.ItemActions.valueOf("POSSESS")));
     }
 
+    @Test
+    @DisplayName("Deletes Node on left side of Tree")
+    public void testDeleteLeft(){
+        beforeBinarySearchTests();
+        assertTrue(bst.find("Den"));
+        assertTrue(bst.remove("Den"));
+        assertFalse(bst.find("Den"));
+    }
+
+    @Test
+    @DisplayName("Deletes Node on the right side of Tree")
+    public void testDeleteRight(){
+        beforeBinarySearchTests();
+        assertTrue(bst.find("Restroom"));
+        assertTrue(bst.remove("Restroom"));
+        assertFalse(bst.find("Restroom"));
+    }
+
+    @Test
+    @DisplayName("Ensuring the values in the subtree are still there after a left removal")
+    public void testLeftStillThere(){
+        beforeBinarySearchTests();
+        assertTrue(bst.find("Arcade"));
+        assertTrue(bst.find("Dining Room"));
+        assertTrue(bst.find("Closet"));
+
+        assertTrue(bst.find("Den"));
+        assertTrue(bst.remove("Den"));
+        assertFalse(bst.find("Den"));
+
+        assertTrue(bst.find("Arcade"));
+        assertTrue(bst.find("Dining Room"));
+        assertTrue(bst.find("Closet"));
+    }
+
+    @Test
+    @DisplayName("Ensuring the values in the subtree are still there after a left removal")
+    public void testRightStillThere(){
+        beforeBinarySearchTests();
+        assertTrue(bst.find("Opera Theatre"));
+        assertTrue(bst.find("Nathan's Room"));
+        assertTrue(bst.find("Piano Room"));
+        assertTrue(bst.find("Queen Bedroom"));
+        assertTrue(bst.find("Study Room"));
+        assertTrue(bst.find("Running Room"));
+        assertTrue(bst.find("Table Hangout"));
+
+        assertTrue(bst.find("Restroom"));
+        assertTrue(bst.remove("Restroom"));
+        assertFalse(bst.find("Restroom"));
+
+        assertTrue(bst.find("Opera Theatre"));
+        assertTrue(bst.find("Nathan's Room"));
+        assertTrue(bst.find("Piano Room"));
+        assertTrue(bst.find("Queen Bedroom"));
+        assertTrue(bst.find("Study Room"));
+        assertTrue(bst.find("Running Room"));
+        assertTrue(bst.find("Table Hangout"));
+    }
+
+    @Test
+    @DisplayName("Deleting the most bottom right node")
+    public void testRemoveBottomRight(){
+        beforeBinarySearchTests();
+
+        assertTrue(bst.find("Table Hangout"));
+        assertTrue(bst.remove("Table Hangout"));
+        assertFalse(bst.find("Table Hangout"));
+    }
+
+    @Test
+    @DisplayName("Deletes Root")
+    public void testRemoveRoot(){
+        beforeBinarySearchTests();
+
+        assertTrue(bst.find("Living Room"));
+        assertTrue(bst.remove("Living Room"));
+        assertFalse(bst.find("Living Room"));
+    }
+
+    @Test
+    @DisplayName("Retains all values after deletion of Root")
+    public void testRemoveRootRetention(){
+        beforeBinarySearchTests();
+
+        assertTrue(bst.find("Living Room"));
+        assertTrue(bst.remove("Living Room"));
+        assertFalse(bst.find("Living Room"));
+
+        assertTrue(bst.find("Den"));
+        assertTrue(bst.find("Arcade"));
+        assertTrue(bst.find("Dining Room"));
+        assertTrue(bst.find("Closet"));
+        assertTrue(bst.find("Restroom"));
+        assertTrue(bst.find("Opera Theatre"));
+        assertTrue(bst.find("Nathan's Room"));
+        assertTrue(bst.find("Piano Room"));
+        assertTrue(bst.find("Queen Bedroom"));
+        assertTrue(bst.find("Study Room"));
+        assertTrue(bst.find("Running Room"));
+        assertTrue(bst.find("Table Hangout"));
+    }
 }

@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.edu.tester.HauntedHouseTester" tests="12" skipped="0" failures="0" errors="0" timestamp="2022-11-03T15:47:06" hostname="david-IdeaPad-1-15ALC7" time="0.041">
+<testsuite name="com.edu.tester.HauntedHouseTester" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-10T20:55:45" hostname="david-IdeaPad-1-15ALC7" time="0.015">
   <properties/>
-  <testcase name="Player goes back to starting room and leaves previous room" classname="com.edu.tester.HauntedHouseTester" time="0.019"/>
-  <testcase name="Checks if throwing an item breaks it" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
-  <testcase name="Player is added to room" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
-  <testcase name="NPC returns to original room, checks cases of adult and child" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
-  <testcase name="Testing the NPC array to make sure its in an expected state before movement" classname="com.edu.tester.HauntedHouseTester" time="0.0"/>
-  <testcase name="Tests if a broken item can be acted upon" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
-  <testcase name="Testing the NPC array to make sure its in an expected state after movement" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
-  <testcase name="Player goes back to starting room and is added back" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
-  <testcase name="NPC leaves previous room, checks if the adult leaves the room and then if the child leaves the room" classname="com.edu.tester.HauntedHouseTester" time="0.0"/>
-  <testcase name="NPC is added to new room, checks adult npc then child npc" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
-  <testcase name="Cleans Broken item, checks adult case then child case" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
-  <testcase name="Player truly leaves room" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Retains all values after deletion of Root" classname="com.edu.tester.HauntedHouseTester" time="0.015"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>
