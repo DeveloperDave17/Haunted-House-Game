@@ -84,6 +84,13 @@ public class RoomXMLParser extends DefaultHandler{
                 player = room.getPlayer();
             }
         }
+
+        BinarySearchTree<String, Room> bst = new BinarySearchTree<>();
+        for(Room room: rooms){
+            bst.add(room.getRoomName().toLowerCase(), room);
+        }
+        player.setBinarySearchTree(bst);
+
         return player;
     }
 

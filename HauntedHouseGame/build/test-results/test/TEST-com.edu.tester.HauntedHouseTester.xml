@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.edu.tester.HauntedHouseTester" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-10T20:55:45" hostname="david-IdeaPad-1-15ALC7" time="0.015">
+<testsuite name="com.edu.tester.HauntedHouseTester" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-11T01:21:01" hostname="david-IdeaPad-1-15ALC7" time="0.018">
   <properties/>
-  <testcase name="Retains all values after deletion of Root" classname="com.edu.tester.HauntedHouseTester" time="0.015"/>
+  <testcase name="Insertion test" classname="com.edu.tester.HauntedHouseTester" time="0.018"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

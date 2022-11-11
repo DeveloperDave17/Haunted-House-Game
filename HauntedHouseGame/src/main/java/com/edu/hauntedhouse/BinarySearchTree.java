@@ -36,6 +36,19 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         return find(currentNode.right, target);
     }
 
+    public V getValue(K key){
+        return getValue(root, key);
+    }
+
+    private V getValue(Node currentNode, K target){
+        if (currentNode == null) return null;
+        int compareResult = target.compareTo(currentNode.key);
+        if (compareResult == 0) return currentNode.value;
+        if (compareResult < 0)
+            // Return the result of find in the left subtree.
+            return getValue(currentNode.left, target);
+        return getValue(currentNode.right, target);
+    }
     /*
      * Insert strategy:
      * - If the current root is null, replace current root with a
@@ -114,7 +127,9 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
 
     public String toString() {
         if (root == null) return "null";
-        return root.toString();
+        String result = root.toString();
+        result = result.replace("null", "");
+        return result;
     }
 
 
@@ -134,8 +149,7 @@ public class BinarySearchTree<K extends Comparable<K>, V> {
         }
 
         public String toString() {
-            return "(" + left + " - " + value + " - " + right + ")";
-            //return data.toString();
+            return left + "" + value + "" + right;
         }
     }
 }

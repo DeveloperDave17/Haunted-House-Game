@@ -228,6 +228,15 @@ public class HauntedHouseTester {
     }
 
     @Test
+    @DisplayName("Insertion test")
+    public void testInsert(){
+        beforeBinarySearchTests();
+        Room temp = new Room("Indoor Pool", "");
+        bst.add(temp.getRoomName(), temp);
+        assertTrue(bst.find(temp.getRoomName()));
+    }
+
+    @Test
     @DisplayName("Deletes Node on left side of Tree")
     public void testDeleteLeft(){
         beforeBinarySearchTests();

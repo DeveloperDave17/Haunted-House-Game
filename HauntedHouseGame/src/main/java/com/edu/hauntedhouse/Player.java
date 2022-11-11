@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Player extends Character{
 
+    private BinarySearchTree<String, Room> bst;
+    private boolean cheatMode;
     /**
      * Creates a player object and sends the name and description to the character's constructor.
      * @param name Name of the player.
@@ -12,6 +14,7 @@ public class Player extends Character{
      */
     public Player(String name, String desc){
         super(name,desc);
+        cheatMode = false;
     }
 
     public void Play(Scanner s){
@@ -39,7 +42,19 @@ public class Player extends Character{
                     System.out.println("throw:item - throws an item");
                     System.out.println("exit or quit will allow you to leave the game before the time is up\n");
                 }
-                case "look" -> System.out.println(this.getRoomReference());
+                case "look" -> {
+                    if(inputSplit.length < 2) {
+                        System.out.print("\n" + this.getRoomReference());
+                    }else if(cheatMode){
+                        if(inputSplit[1].equals("all")){
+                            System.out.print("\n" + bst);
+                        }else{
+                            System.out.print("\n" + lookAtAnyRoom(inputSplit[1]));
+                        }
+                    }else{
+                        System.out.println("Please enter a valid command.");
+                    }
+                }
                 case "north" -> System.out.println(move("north") ? "Successfully moved\n" : "Failed to move\n");
                 case "east" -> System.out.println(move("east") ? "Successfully moved\n" : "Failed to move\n");
                 case "south" -> System.out.println(move("south") ? "Successfully moved\n" : "Failed to move\n");
@@ -89,7 +104,23 @@ public class Player extends Character{
                         System.out.println(inputSplit[1] + " is not in this room\n");
                     }
                 }
-                case "secret" -> HauntedTimer.pauseTimer();
+                case "cheatmode" -> {
+                    if(!cheatMode){
+                        cheatMode = true;
+                        System.out.println("Cheat Mode Enabled!");
+                    }else{
+                        cheatMode = false;
+                        System.out.println("Cheat Mode Disabled");
+                    }
+                }
+                case "secret" -> {
+                    if (cheatMode) {
+                        HauntedTimer.pauseTimer();
+                        System.out.println("Time is now Frozen");
+                    } else {
+                        System.out.println("Cheat Mode is required for this coomand");
+                    }
+                }
                 case "exit", "quit" -> play = false;
                 default -> System.out.println("Please enter an actual command like help\n");
             }
@@ -152,5 +183,14 @@ public class Player extends Character{
         }
     }
 
+    public void setBinarySearchTree(BinarySearchTree<String, Room> bst){this.bst = bst;}
 
+    private String lookAtAnyRoom(String key){
+        Room temp = bst.getValue(key);
+        if(temp != null){
+            return temp.toString();
+        }else{
+            return "";
+        }
+    }
 }

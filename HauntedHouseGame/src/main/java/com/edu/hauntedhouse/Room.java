@@ -62,7 +62,7 @@ public class Room {
         if(player != null){descs.add("\n" + player.toString());}
         items.forEach(item -> descs.add("\n" + item.toString()));
         String desc = descs.toString().replace("[", "").replace("]", "");
-        return roomName + " : " + roomDesc + desc + "\n";
+        return roomName + " : " + roomDesc + desc + "\n\n";
     }
 
 
