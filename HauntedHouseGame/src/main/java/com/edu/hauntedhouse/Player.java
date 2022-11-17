@@ -109,8 +109,15 @@ public class Player extends Character{
                         cheatMode = true;
                         System.out.println("Cheat Mode Enabled!");
                     }else{
+                        System.out.println("Cheat Mode is Already Enabled!");
+                    }
+                }
+                case "nocheatmode" -> {
+                    if(cheatMode){
                         cheatMode = false;
-                        System.out.println("Cheat Mode Disabled");
+                        System.out.println("Cheat Mode Disabled!");
+                    }else{
+                        System.out.println("Cheat Mode is already Disabled!");
                     }
                 }
                 case "secret" -> {

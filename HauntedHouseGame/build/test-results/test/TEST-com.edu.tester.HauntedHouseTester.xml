@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.edu.tester.HauntedHouseTester" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-11-11T01:21:01" hostname="david-IdeaPad-1-15ALC7" time="0.018">
+<testsuite name="com.edu.tester.HauntedHouseTester" tests="22" skipped="0" failures="0" errors="0" timestamp="2022-11-17T19:35:44" hostname="david-IdeaPad-1-15ALC7" time="0.085">
   <properties/>
-  <testcase name="Insertion test" classname="com.edu.tester.HauntedHouseTester" time="0.018"/>
+  <testcase name="Retains all values after deletion of Root" classname="com.edu.tester.HauntedHouseTester" time="0.024"/>
+  <testcase name="Deletes Node on the right side of Tree" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
+  <testcase name="Player goes back to starting room and leaves previous room" classname="com.edu.tester.HauntedHouseTester" time="0.004"/>
+  <testcase name="Ensuring the values in the subtree are still there after a left removal" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
+  <testcase name="Checks if throwing an item breaks it" classname="com.edu.tester.HauntedHouseTester" time="0.008"/>
+  <testcase name="Player is added to room" classname="com.edu.tester.HauntedHouseTester" time="0.003"/>
+  <testcase name="Deleting the most bottom right node" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="NPC returns to original room, checks cases of adult and child" classname="com.edu.tester.HauntedHouseTester" time="0.003"/>
+  <testcase name="Deletes Root" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Testing the NPC array to make sure its in an expected state before movement" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Ensuring the values in the subtree are still there after a left removal" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Tests if a broken item can be acted upon" classname="com.edu.tester.HauntedHouseTester" time="0.0"/>
+  <testcase name="Testing the NPC array to make sure its in an expected state after movement" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
+  <testcase name="Deletes Node on left side of Tree" classname="com.edu.tester.HauntedHouseTester" time="0.0"/>
+  <testcase name="Player goes back to starting room and is added back" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
+  <testcase name="NPC leaves previous room, checks if the adult leaves the room and then if the child leaves the room" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Ensuring iteration within iteration is possible" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
+  <testcase name="Insertion test" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="NPC is added to new room, checks adult npc then child npc" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Cleans Broken item, checks adult case then child case" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Iterable iterates through all elements" classname="com.edu.tester.HauntedHouseTester" time="0.001"/>
+  <testcase name="Player truly leaves room" classname="com.edu.tester.HauntedHouseTester" time="0.002"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

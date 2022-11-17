@@ -338,4 +338,69 @@ public class HauntedHouseTester {
         assertTrue(bst.find("Running Room"));
         assertTrue(bst.find("Table Hangout"));
     }
+
+    @Test
+    @DisplayName("Iterable iterates through all elements")
+    public void testIterable(){
+        BinarySearchTree<Integer, Integer> bstIterable = new BinarySearchTree<>();
+        int result = 0;
+        bstIterable.add(5,5);
+        result += 5;
+        bstIterable.add(6,6);
+        result += 6;
+        bstIterable.add(2,2);
+        result += 2;
+        bstIterable.add(1,1);
+        result += 1;
+        bstIterable.add(3,3);
+        result += 3;
+        bstIterable.add(9,9);
+        result += 9;
+        bstIterable.add(7,7);
+        result += 7;
+        bstIterable.add(8,8);
+        result += 8;
+
+        int iterResult = 0;
+        for(int b : bstIterable){
+            iterResult += b;
+        }
+        assertEquals(iterResult, result);
+    }
+
+    @Test
+    @DisplayName("Ensuring iteration within iteration is possible")
+    public void testIterableInIterable(){
+        BinarySearchTree<Integer, Integer> bstIterable = new BinarySearchTree<>();
+        int result = 0;
+        bstIterable.add(5,5);
+        result += 5;
+        bstIterable.add(6,6);
+        result += 6;
+        bstIterable.add(2,2);
+        result += 2;
+        bstIterable.add(1,1);
+        result += 1;
+        bstIterable.add(3,3);
+        result += 3;
+        bstIterable.add(9,9);
+        result += 9;
+        bstIterable.add(7,7);
+        result += 7;
+        bstIterable.add(8,8);
+        result += 8;
+
+        //Since the entire tree is going to be iterated through 8 times (8 nodes in the tree) and
+        //Each node is also going to be added another 8 times this is the expected result
+        //Could be simplified further to the sum of all nodes times 9.
+        result = result * 8 + (1 * 8) + (2 * 8) + (3 * 8) + (5 * 8) + (6 * 8) + (7 * 8) + (8 * 8) + (9 * 8);
+
+        int iterResult = 0;
+        for(int a : bstIterable) {
+            for (int b : bstIterable) {
+                iterResult += a + b;
+            }
+        }
+        assertEquals(iterResult, result);
+    }
 }
