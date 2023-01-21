@@ -31,11 +31,10 @@ public class NPC extends Character{
         if(scarednessLevel >= 100){
             this.getRoomReference().npcLeaveRoom(this);
             HauntedTimer.addTime(30);
-            return getName() + " lets out this profound shriek, rattling everyone's ears\n";
+            return getName() + " lets out this profound shriek, rattling everyone's ears and leaves the house\n";
         } else if(scarednessLevel >= 50 && !movedRoom){
-            move();
             movedRoom = true;
-            return getName() + " shrieks, shrieks, and shrieks\n";
+            return getName() + " shrieks, shrieks, and shrieks " + move() + "\n";
         }
         return getName() + " shrieks\n";
     }
@@ -43,7 +42,7 @@ public class NPC extends Character{
     /**
      * Moves the npc from their current room to a randomly connected room.
      */
-    public void move(){
+    public String move(){
         Room temp = this.getRoomReference();
         ArrayList<Room> rooms = new ArrayList<>();
         Random random = new Random();
@@ -69,6 +68,8 @@ public class NPC extends Character{
         temp.npcLeaveRoom(this);
 
         this.getRoomReference().removeBrokenItems();
+
+        return "and moves to the " + this.getRoomReference().getRoomName();
     }
 
     @Override

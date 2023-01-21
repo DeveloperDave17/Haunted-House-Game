@@ -74,7 +74,7 @@ public class Item {
 
     @Override
     public String toString(){
-        return name + " : " + desc + (itemBroken ? " (broken)" : " (not broken)");}
+        return name + " : " + desc + (itemBroken ? " (broken)" : " (not broken)") + " Possible Actions: " + getItemActions();}
 
     /**
      * breakItem updates the itemBroken value to true.
@@ -90,4 +90,19 @@ public class Item {
     }
 
     public String getItemName(){return name;}
+
+    public String getItemActions(){
+        String actionString = "(";
+        int counter = 0;
+        for(ItemActions i: actions){
+            if(i != null) {
+                if (counter > 0) {
+                    actionString += ", ";
+                }
+                actionString += i;
+                counter++;
+            }
+        }
+        return actionString + ")";
+    }
 }
